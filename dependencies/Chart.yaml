@@ -1,0 +1,9 @@
+apiVersion: v1
+name: dependencies
+version: 0.1.0
+description: barpilot dependencies
+keywords:
+  - k8sniff
+maintainers:
+  - name: barpilot
+engine: gotpl

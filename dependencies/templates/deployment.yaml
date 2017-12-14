@@ -1,0 +1,35 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: k8sniff
+  labels:
+    app: k8sniff
+  namespace: {{ $.Values.k8sniff.namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: k8sniff
+  template:
+    metadata:
+      labels:
+        app: k8sniff
+    spec:
+      {{ if $.Values.k8sniff.rbacEnabled }}
+      serviceAccountName: k8sniff
+      {{ end }}
+      volumes:
+      - name: config
+        configMap:
+          name: "k8sniff-config"
+      containers:
+      - name: k8sniff
+        image: kubermatic/k8sniff:{{ $.Values.k8sniff.imageTag | default "latest" }}
+        command: ["/pipeline/source/k8sniff"]
+        args: ["-config", "/etc/k8sniff/config.json", "-logtostderr", "-v", "1"]
+        ports:
+        - containerPort: 443
+        volumeMounts:
+        - name: "config"
+          mountPath: "/etc/k8sniff"
+          readOnly: true

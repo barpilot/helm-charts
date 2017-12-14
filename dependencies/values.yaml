@@ -1,0 +1,5 @@
+k8sniff:
+  namespace: admin
+  rbacEnabled: true
+  imageTag: e7435d989925e8559b0e5ca26da69f84a1035c32
+  nodePort: 31443

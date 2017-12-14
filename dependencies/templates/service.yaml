@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: k8sniff
+  namespace: {{ $.Values.k8sniff.namespace }}
+spec:
+  selector:
+    app: k8sniff
+  type: NodePort
+  ports:
+  - name: http
+    port: 443
+    nodePort: {{ $.Values.k8sniff.nodePort }}
